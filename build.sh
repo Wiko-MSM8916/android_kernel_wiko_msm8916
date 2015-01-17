@@ -8,7 +8,7 @@ make msm8916_l5510_defconfig
 
 START=$(date +%s)
 
-make -j12
+make -j1
 
 END=$(date +%s)
 BUILDTIME=$((END - START))

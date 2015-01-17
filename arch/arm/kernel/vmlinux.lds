@@ -1,7 +1,7 @@
 /*
  *
  * Automatically generated file; DO NOT EDIT.
- * Linux/arm 3.10.49 Kernel Configuration
+ * Linux/arm 3.10.63 Kernel Configuration
  *
  */
 /*
