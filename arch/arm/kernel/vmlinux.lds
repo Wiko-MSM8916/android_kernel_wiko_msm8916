@@ -1,7 +1,7 @@
 /*
  *
  * Automatically generated file; DO NOT EDIT.
- * Linux/arm 3.10.63 Kernel Configuration
+ * Linux/arm 3.10.102-ExplosionLollipop™-R01 Kernel Configuration
  *
  */
 /*
@@ -438,6 +438,12 @@
  */
 /*
  * Convert a page to/from a physical address
+ */
+/*
+ * PLAT_PHYS_OFFSET is the offset (from zero) of the start of physical
+ * memory.  This is used for XIP and NoMMU kernels, or by kernels which
+ * have their own mach/memory.h.  Assembly code must always use
+ * PLAT_PHYS_OFFSET and not PHYS_OFFSET.
  */
 /*
  *  arch/arm/include/asm/page.h
