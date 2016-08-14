@@ -998,7 +998,10 @@ enum v4l2_mpeg_vidc_video_perf_mode {
 enum v4l2_mpeg_vidc_video_priority {
  	V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_ENABLE = 0,
  	V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_DISABLE = 1,
-};		
+};
+
+#define V4L2_CID_MPEG_VIDC_VIDEO_OPERATING_RATE \
+		(V4L2_CID_MPEG_MSM_VIDC_BASE + 75)		
 
 /*  Camera class control IDs */
 
