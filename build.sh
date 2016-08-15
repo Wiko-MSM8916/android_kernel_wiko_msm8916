@@ -2,9 +2,9 @@
 
 export ARCH=arm
 
-export CROSS_COMPILE=~/android/toolchain/arm-eabi-4.8/bin/arm-eabi-
+export CROSS_COMPILE=~/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-
 
-make msm8916_l5510_defconfig
+make cyanogenmod_l5510_defconfig
 
 START=$(date +%s)
 

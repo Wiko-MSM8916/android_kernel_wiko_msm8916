@@ -1,7 +1,7 @@
 /*
  *
  * Automatically generated file; DO NOT EDIT.
- * Linux/arm 3.10.102-ExplosionLollipop™-R01 Kernel Configuration
+ * Linux/arm 3.10.104 Kernel Configuration
  *
  */
 /*
