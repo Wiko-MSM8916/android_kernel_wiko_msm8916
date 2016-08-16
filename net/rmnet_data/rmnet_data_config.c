@@ -1102,9 +1102,15 @@ static void _rmnet_free_vnd_later(struct work_struct *work)
 {
 	int i;
 	struct rmnet_free_vnd_work *fwork;
+<<<<<<< HEAD
 	fwork = container_of(work, struct rmnet_free_vnd_work, work);
 
 	for (i = 0; i < fwork->count; i++)
+=======
+    fwork = container_of(work, struct rmnet_free_vnd_work, work);
+
+    for (i = 0; i < fwork->count; i++)
+>>>>>>> 1b69c56... net: rmnet_data: consolidate VND free work-queue task on force unasso…
 		rmnet_free_vnd(fwork->vnd_id[i]);
 	kfree(fwork);
 }
@@ -1134,6 +1140,9 @@ static void rmnet_force_unassociate_device(struct net_device *dev)
 
 	trace_rmnet_unregister_cb_clear_vnds(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1b69c56... net: rmnet_data: consolidate VND free work-queue task on force unasso…
 	vnd_work = (struct rmnet_free_vnd_work *)
 		kmalloc(sizeof(struct rmnet_free_vnd_work), GFP_KERNEL);
 	if (!vnd_work) {
@@ -1142,9 +1151,13 @@ static void rmnet_force_unassociate_device(struct net_device *dev)
 	}
 	INIT_WORK(&vnd_work->work, _rmnet_free_vnd_later);
 	vnd_work->count = 0;
+<<<<<<< HEAD
 
 =======
 >>>>>>> 630682e... net: rmnet_data: Add trace points for device force unassociation
+=======
+ 
+>>>>>>> 1b69c56... net: rmnet_data: consolidate VND free work-queue task on force unasso…
 	/* Check the VNDs for offending mappings */
 	for (i = 0, j = 0; i < RMNET_DATA_MAX_VND &&
 				j < RMNET_DATA_MAX_VND; i++) {
@@ -1166,13 +1179,20 @@ static void rmnet_force_unassociate_device(struct net_device *dev)
 			j++;
 		}
 	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 1b69c56... net: rmnet_data: consolidate VND free work-queue task on force unasso…
 	if (j > 0) {
 		vnd_work->count = j;
 		schedule_work(&vnd_work->work);
 	} else {
 		kfree(vnd_work);
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b69c56... net: rmnet_data: consolidate VND free work-queue task on force unasso…
 
 	/* Clear the mappings on the phys ep */
 	trace_rmnet_unregister_cb_clear_lepcs(dev);
