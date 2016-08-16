@@ -1133,6 +1133,7 @@ static void rmnet_force_unassociate_device(struct net_device *dev)
 	}
 
 	trace_rmnet_unregister_cb_clear_vnds(dev);
+<<<<<<< HEAD
 	vnd_work = (struct rmnet_free_vnd_work *)
 		kmalloc(sizeof(struct rmnet_free_vnd_work), GFP_KERNEL);
 	if (!vnd_work) {
@@ -1142,6 +1143,8 @@ static void rmnet_force_unassociate_device(struct net_device *dev)
 	INIT_WORK(&vnd_work->work, _rmnet_free_vnd_later);
 	vnd_work->count = 0;
 
+=======
+>>>>>>> 630682e... net: rmnet_data: Add trace points for device force unassociation
 	/* Check the VNDs for offending mappings */
 	for (i = 0, j = 0; i < RMNET_DATA_MAX_VND &&
 				j < RMNET_DATA_MAX_VND; i++) {
