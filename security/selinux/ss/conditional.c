@@ -622,16 +622,16 @@ int cond_write_list(struct policydb *p, struct cond_node *list, void *fp)
 void cond_compute_xperms(struct avtab *ctab, struct avtab_key *key,
 		struct extended_perms_decision *xpermd)
 {
- 	struct avtab_node *node;
- 
- 	if (!ctab || !key || !xpermd)
- 		return;
- 
- 	for (node = avtab_search_node(ctab, key); node;
- 			node = avtab_search_node_next(node, key->specified)) {
- 		if (node->key.specified & AVTAB_ENABLED)
- 			services_compute_xperms_decision(xpermd, node);
- 	}
+	struct avtab_node *node;
+
+	if (!ctab || !key || !xpermd)
+		return;
+
+	for (node = avtab_search_node(ctab, key); node;
+			node = avtab_search_node_next(node, key->specified)) {
+		if (node->key.specified & AVTAB_ENABLED)
+			services_compute_xperms_decision(xpermd, node);
+	}
 	return;
 
 }

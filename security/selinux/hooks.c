@@ -435,12 +435,12 @@ static int sb_finish_set_opts(struct super_block *sb)
 	/* Special handling for sysfs. Is genfs but also has setxattr handler*/
 	if (strncmp(sb->s_type->name, "sysfs", sizeof("sysfs")) == 0)
 		sbsec->flags |= SE_SBLABELSUPP;
-	
+
 	/*
 	 * Special handling for rootfs. Is genfs but supports
- 	 * setting SELinux context on in-core inodes.
- 	 */
- 	if (strncmp(sb->s_type->name, "rootfs", sizeof("rootfs")) == 0)
+	 * setting SELinux context on in-core inodes.
+	 */
+	if (strncmp(sb->s_type->name, "rootfs", sizeof("rootfs")) == 0)
 		sbsec->flags |= SE_SBLABELSUPP;
 
 	/* Initialize the root inode. */
@@ -706,11 +706,11 @@ static int selinux_set_mnt_opts(struct super_block *sb,
 
 	if (strcmp(sb->s_type->name, "proc") == 0)
 		sbsec->flags |= SE_SBPROC | SE_SBGENFS;
- 
- 	if (!strcmp(sb->s_type->name, "debugfs") ||
- 	    !strcmp(sb->s_type->name, "sysfs") ||
- 	    !strcmp(sb->s_type->name, "pstore"))
- 		sbsec->flags |= SE_SBGENFS;
+
+	if (!strcmp(sb->s_type->name, "debugfs") ||
+	    !strcmp(sb->s_type->name, "sysfs") ||
+	    !strcmp(sb->s_type->name, "pstore"))
+		sbsec->flags |= SE_SBGENFS;
 
 	/* Determine the labeling behavior to use for this filesystem type. */
 	rc = security_fs_use((sbsec->flags & SE_SBPROC) ? "proc" : sb->s_type->name, &sbsec->behavior, &sbsec->sid);
@@ -1404,7 +1404,7 @@ static int inode_doinit_with_dentry(struct inode *inode, struct dentry *opt_dent
 				goto out_unlock;
 			isec->sclass = inode_mode_to_security_class(inode->i_mode);
 			rc = selinux_genfs_get_sid(dentry, isec->sclass,
- 						   sbsec->flags, &sid);
+						   sbsec->flags, &sid);
 			dput(dentry);
 			if (rc)
 				goto out_unlock;
@@ -3159,45 +3159,45 @@ static void selinux_file_free_security(struct file *file)
 	file_free_security(file);
 }
 
- /*
-  * Check whether a task has the ioctl permission and cmd
-  * operation to an inode.
-  */
- int ioctl_has_perm(const struct cred *cred, struct file *file,
- 		u32 requested, u16 cmd)
- {
- 	struct common_audit_data ad;
- 	struct file_security_struct *fsec = file->f_security;
- 	struct inode *inode = file_inode(file);
- 	struct inode_security_struct *isec = inode->i_security;
- 	struct lsm_ioctlop_audit ioctl;
- 	u32 ssid = cred_sid(cred);
- 	int rc;
- 	u8 driver = cmd >> 8;
- 	u8 xperm = cmd & 0xff;
- 
- 	ad.type = LSM_AUDIT_DATA_IOCTL_OP;
- 	ad.u.op = &ioctl;
- 	ad.u.op->cmd = cmd;
- 	ad.u.op->path = file->f_path;
- 
- 	if (ssid != fsec->sid) {
- 		rc = avc_has_perm(ssid, fsec->sid,
- 				SECCLASS_FD,
- 				FD__USE,
- 				&ad);
- 		if (rc)
- 			goto out;
- 	}
- 
- 	if (unlikely(IS_PRIVATE(inode)))
- 		return 0;
- 
- 	rc = avc_has_extended_perms(ssid, isec->sid, isec->sclass,
- 			requested, driver, xperm, &ad);
- out:
- 	return rc;
- }
+/*
+ * Check whether a task has the ioctl permission and cmd
+ * operation to an inode.
+ */
+int ioctl_has_perm(const struct cred *cred, struct file *file,
+		u32 requested, u16 cmd)
+{
+	struct common_audit_data ad;
+	struct file_security_struct *fsec = file->f_security;
+	struct inode *inode = file_inode(file);
+	struct inode_security_struct *isec = inode->i_security;
+	struct lsm_ioctlop_audit ioctl;
+	u32 ssid = cred_sid(cred);
+	int rc;
+	u8 driver = cmd >> 8;
+	u8 xperm = cmd & 0xff;
+
+	ad.type = LSM_AUDIT_DATA_IOCTL_OP;
+	ad.u.op = &ioctl;
+	ad.u.op->cmd = cmd;
+	ad.u.op->path = file->f_path;
+
+	if (ssid != fsec->sid) {
+		rc = avc_has_perm(ssid, fsec->sid,
+				SECCLASS_FD,
+				FD__USE,
+				&ad);
+		if (rc)
+			goto out;
+	}
+
+	if (unlikely(IS_PRIVATE(inode)))
+		return 0;
+
+	rc = avc_has_extended_perms(ssid, isec->sid, isec->sclass,
+			requested, driver, xperm, &ad);
+out:
+	return rc;
+}
 
 static int selinux_file_ioctl(struct file *file, unsigned int cmd,
 			      unsigned long arg)

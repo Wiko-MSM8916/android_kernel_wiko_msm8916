@@ -71,7 +71,7 @@ struct avtab_extended_perms {
 
 struct avtab_datum {
 	union {
- 		u32 data; /* access vector or type value */
+		u32 data; /* access vector or type value */
 		struct avtab_extended_perms *xperms;
 	} u;
 };

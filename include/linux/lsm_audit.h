@@ -41,8 +41,8 @@ struct lsm_network_audit {
 };
 
 struct lsm_ioctlop_audit {
- 	struct path path;
- 	u16 cmd;
+	struct path path;
+	u16 cmd;
 };
 
 /* Auxiliary data to use in generating the audit record. */

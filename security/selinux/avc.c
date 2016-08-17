@@ -185,17 +185,17 @@ void __init avc_init(void)
 	atomic_set(&avc_cache.lru_hint, 0);
 
 	avc_node_cachep = kmem_cache_create("avc_node", sizeof(struct avc_node),
-					     0, SLAB_PANIC, NULL);
- 	avc_xperms_cachep = kmem_cache_create("avc_xperms_node",
- 					sizeof(struct avc_xperms_node),
- 					0, SLAB_PANIC, NULL);
- 	avc_xperms_decision_cachep = kmem_cache_create(
- 					"avc_xperms_decision_node",
- 					sizeof(struct avc_xperms_decision_node),
- 					0, SLAB_PANIC, NULL);
- 	avc_xperms_data_cachep = kmem_cache_create("avc_xperms_data",
- 					sizeof(struct extended_perms_data),
- 					0, SLAB_PANIC, NULL);
+					0, SLAB_PANIC, NULL);
+	avc_xperms_cachep = kmem_cache_create("avc_xperms_node",
+					sizeof(struct avc_xperms_node),
+					0, SLAB_PANIC, NULL);
+	avc_xperms_decision_cachep = kmem_cache_create(
+					"avc_xperms_decision_node",
+					sizeof(struct avc_xperms_decision_node),
+					0, SLAB_PANIC, NULL);
+	avc_xperms_data_cachep = kmem_cache_create("avc_xperms_data",
+					sizeof(struct extended_perms_data),
+					0, SLAB_PANIC, NULL);
 
 	audit_log(current->audit_context, GFP_KERNEL, AUDIT_KERNEL, "AVC INITIALIZED\n");
 }
@@ -230,38 +230,38 @@ int avc_get_hash_stats(char *page)
 			 slots_used, AVC_CACHE_SLOTS, max_chain_len);
 }
 
- /*
-  * using a linked list for extended_perms_decision lookup because the list is
-  * always small. i.e. less than 5, typically 1
-  */
+/*
+ * using a linked list for extended_perms_decision lookup because the list is
+ * always small. i.e. less than 5, typically 1
+ */
 static struct extended_perms_decision *avc_xperms_decision_lookup(u8 driver,
 					struct avc_xperms_node *xp_node)
 {
- 	struct avc_xperms_decision_node *xpd_node;
- 
- 	list_for_each_entry(xpd_node, &xp_node->xpd_head, xpd_list) {
- 		if (xpd_node->xpd.driver == driver)
- 			return &xpd_node->xpd;
- 	}
- 	return NULL;
+	struct avc_xperms_decision_node *xpd_node;
+
+	list_for_each_entry(xpd_node, &xp_node->xpd_head, xpd_list) {
+		if (xpd_node->xpd.driver == driver)
+			return &xpd_node->xpd;
+	}
+	return NULL;
 }
- 
+
 static inline unsigned int
 avc_xperms_has_perm(struct extended_perms_decision *xpd,
- 					u8 perm, u8 which)
+					u8 perm, u8 which)
 {
- 	unsigned int rc = 0;
- 
- 	if ((which == XPERMS_ALLOWED) &&
- 			(xpd->used & XPERMS_ALLOWED))
- 		rc = security_xperm_test(xpd->allowed->p, perm);
- 	else if ((which == XPERMS_AUDITALLOW) &&
- 			(xpd->used & XPERMS_AUDITALLOW))
- 		rc = security_xperm_test(xpd->auditallow->p, perm);
- 	else if ((which == XPERMS_DONTAUDIT) &&
- 			(xpd->used & XPERMS_DONTAUDIT))
- 		rc = security_xperm_test(xpd->dontaudit->p, perm);
- 	return rc;
+	unsigned int rc = 0;
+
+	if ((which == XPERMS_ALLOWED) &&
+			(xpd->used & XPERMS_ALLOWED))
+		rc = security_xperm_test(xpd->allowed->p, perm);
+	else if ((which == XPERMS_AUDITALLOW) &&
+			(xpd->used & XPERMS_AUDITALLOW))
+		rc = security_xperm_test(xpd->auditallow->p, perm);
+	else if ((which == XPERMS_DONTAUDIT) &&
+			(xpd->used & XPERMS_DONTAUDIT))
+		rc = security_xperm_test(xpd->dontaudit->p, perm);
+	return rc;
 }
 
 static void avc_xperms_allow_perm(struct avc_xperms_node *xp_node,
@@ -273,11 +273,11 @@ static void avc_xperms_allow_perm(struct avc_xperms_node *xp_node,
 	if (xpd && xpd->allowed)
 		security_xperm_set(xpd->allowed->p, perm);
 }
- 
+
 static void avc_xperms_decision_free(struct avc_xperms_decision_node *xpd_node)
 {
 	struct extended_perms_decision *xpd;
- 
+
 	xpd = &xpd_node->xpd;
 	if (xpd->allowed)
 		kmem_cache_free(avc_xperms_data_cachep, xpd->allowed);
@@ -287,19 +287,19 @@ static void avc_xperms_decision_free(struct avc_xperms_decision_node *xpd_node)
 		kmem_cache_free(avc_xperms_data_cachep, xpd->dontaudit);
 	kmem_cache_free(avc_xperms_decision_cachep, xpd_node);
 }
- 
+
 static void avc_xperms_free(struct avc_xperms_node *xp_node)
 {
- 	struct avc_xperms_decision_node *xpd_node, *tmp;
- 
- 	if (!xp_node)
+	struct avc_xperms_decision_node *xpd_node, *tmp;
+
+	if (!xp_node)
 		return;
- 
+
 	list_for_each_entry_safe(xpd_node, tmp, &xp_node->xpd_head, xpd_list) {
- 		list_del(&xpd_node->xpd_list);
- 		avc_xperms_decision_free(xpd_node);
- 	}
- 	kmem_cache_free(avc_xperms_cachep, xp_node);
+		list_del(&xpd_node->xpd_list);
+		avc_xperms_decision_free(xpd_node);
+	}
+	kmem_cache_free(avc_xperms_cachep, xp_node);
 }
 
 static void avc_copy_xperms_decision(struct extended_perms_decision *dest,
@@ -340,7 +340,7 @@ static inline void avc_quick_copy_xperms_decision(u8 perm,
 	if (dest->used & XPERMS_DONTAUDIT)
 		dest->dontaudit->p[i] = src->dontaudit->p[i];
 }
- 
+
 static struct avc_xperms_decision_node
 		*avc_xperms_decision_alloc(u8 which)
 {
@@ -677,10 +677,10 @@ static struct avc_node *avc_insert(u32 ssid, u32 tsid, u16 tclass,
 		hvalue = avc_hash(ssid, tsid, tclass);
 		avc_node_populate(node, ssid, tsid, tclass, avd);
 		rc = avc_xperms_populate(node, xp_node);
- 		if (rc) {
- 			kmem_cache_free(avc_node_cachep, node);
- 			return NULL;
- 		}
+		if (rc) {
+			kmem_cache_free(avc_node_cachep, node);
+			return NULL;
+		}
 		head = &avc_cache.slots[hvalue];
 		lock = &avc_cache.slots_lock[hvalue];
 
@@ -875,7 +875,7 @@ static int avc_update_node(u32 event, u32 perms, u8 driver, u8 xperm, u32 ssid,
 			goto out_unlock;
 		}
 	}
-	
+
 	switch (event) {
 	case AVC_CALLBACK_GRANT:
 		node->ae.avd.allowed |= perms;
@@ -899,8 +899,8 @@ static int avc_update_node(u32 event, u32 perms, u8 driver, u8 xperm, u32 ssid,
 		node->ae.avd.auditdeny &= ~perms;
 		break;
 	case AVC_CALLBACK_ADD_XPERMS:
- 		avc_add_xperms_decision(node, xpd);
- 		break;	
+		avc_add_xperms_decision(node, xpd);
+		break;
 	}
 	avc_node_replace(node, orig);
 out_unlock:
@@ -977,15 +977,15 @@ static noinline struct avc_node *avc_compute_av(u32 ssid, u32 tsid,
 {
 	rcu_read_unlock();
 	INIT_LIST_HEAD(&xp_node->xpd_head);
- 	security_compute_av(ssid, tsid, tclass, avd, &xp_node->xp);
+	security_compute_av(ssid, tsid, tclass, avd, &xp_node->xp);
 	rcu_read_lock();
 	return avc_insert(ssid, tsid, tclass, avd, xp_node);
 }
 
 static noinline int avc_denied(u32 ssid, u32 tsid,
-			    u16 tclass, u32 requested,
- 				u8 driver, u8 xperm, unsigned flags,
- 				struct av_decision *avd)
+				u16 tclass, u32 requested,
+				u8 driver, u8 xperm, unsigned flags,
+				struct av_decision *avd)
 {
 	if (flags & AVC_STRICT)
 		return -EACCES;
@@ -994,7 +994,7 @@ static noinline int avc_denied(u32 ssid, u32 tsid,
 		return -EACCES;
 
 	avc_update_node(AVC_CALLBACK_GRANT, requested, driver, xperm, ssid,
- 				tsid, tclass, avd->seqno, NULL, flags);
+				tsid, tclass, avd->seqno, NULL, flags);
 	return 0;
 }
 
@@ -1008,75 +1008,75 @@ static noinline int avc_denied(u32 ssid, u32 tsid,
 int avc_has_extended_perms(u32 ssid, u32 tsid, u16 tclass, u32 requested,
 			u8 driver, u8 xperm, struct common_audit_data *ad)
 {
- 	struct avc_node *node;
- 	struct av_decision avd;
- 	u32 denied;
- 	struct extended_perms_decision local_xpd;
- 	struct extended_perms_decision *xpd = NULL;
- 	struct extended_perms_data allowed;
- 	struct extended_perms_data auditallow;
- 	struct extended_perms_data dontaudit;
- 	struct avc_xperms_node local_xp_node;
- 	struct avc_xperms_node *xp_node;
- 	int rc = 0, rc2;
- 
- 	xp_node = &local_xp_node;
- 	BUG_ON(!requested);
- 
- 	rcu_read_lock();
- 
- 	node = avc_lookup(ssid, tsid, tclass);
- 	if (unlikely(!node)) {
- 		node = avc_compute_av(ssid, tsid, tclass, &avd, xp_node);
- 	} else {
- 		memcpy(&avd, &node->ae.avd, sizeof(avd));
- 		xp_node = node->ae.xp_node;
- 	}
- 	/* if extended permissions are not defined, only consider av_decision */
- 	if (!xp_node || !xp_node->xp.len)
- 		goto decision;
- 
- 	local_xpd.allowed = &allowed;
- 	local_xpd.auditallow = &auditallow;
- 	local_xpd.dontaudit = &dontaudit;
- 
- 	xpd = avc_xperms_decision_lookup(driver, xp_node);
- 	if (unlikely(!xpd)) {
- 		/*
- 		 * Compute the extended_perms_decision only if the driver
- 		 * is flagged
- 		 */
- 		if (!security_xperm_test(xp_node->xp.drivers.p, driver)) {
- 			avd.allowed &= ~requested;
- 			goto decision;
- 		}
- 		rcu_read_unlock();
- 		security_compute_xperms_decision(ssid, tsid, tclass, driver,
- 						&local_xpd);
- 		rcu_read_lock();
- 		avc_update_node(AVC_CALLBACK_ADD_XPERMS, requested, driver, xperm,
- 				ssid, tsid, tclass, avd.seqno, &local_xpd, 0);
- 	} else {
- 		avc_quick_copy_xperms_decision(xperm, &local_xpd, xpd);
- 	}
- 	xpd = &local_xpd;
- 
- 	if (!avc_xperms_has_perm(xpd, xperm, XPERMS_ALLOWED))
- 		avd.allowed &= ~requested;
- 
+	struct avc_node *node;
+	struct av_decision avd;
+	u32 denied;
+	struct extended_perms_decision local_xpd;
+	struct extended_perms_decision *xpd = NULL;
+	struct extended_perms_data allowed;
+	struct extended_perms_data auditallow;
+	struct extended_perms_data dontaudit;
+	struct avc_xperms_node local_xp_node;
+	struct avc_xperms_node *xp_node;
+	int rc = 0, rc2;
+
+	xp_node = &local_xp_node;
+	BUG_ON(!requested);
+
+	rcu_read_lock();
+
+	node = avc_lookup(ssid, tsid, tclass);
+	if (unlikely(!node)) {
+		node = avc_compute_av(ssid, tsid, tclass, &avd, xp_node);
+	} else {
+		memcpy(&avd, &node->ae.avd, sizeof(avd));
+		xp_node = node->ae.xp_node;
+	}
+	/* if extended permissions are not defined, only consider av_decision */
+	if (!xp_node || !xp_node->xp.len)
+		goto decision;
+
+	local_xpd.allowed = &allowed;
+	local_xpd.auditallow = &auditallow;
+	local_xpd.dontaudit = &dontaudit;
+
+	xpd = avc_xperms_decision_lookup(driver, xp_node);
+	if (unlikely(!xpd)) {
+		/*
+		 * Compute the extended_perms_decision only if the driver
+		 * is flagged
+		 */
+		if (!security_xperm_test(xp_node->xp.drivers.p, driver)) {
+			avd.allowed &= ~requested;
+			goto decision;
+		}
+		rcu_read_unlock();
+		security_compute_xperms_decision(ssid, tsid, tclass, driver,
+						&local_xpd);
+		rcu_read_lock();
+		avc_update_node(AVC_CALLBACK_ADD_XPERMS, requested, driver, xperm,
+				ssid, tsid, tclass, avd.seqno, &local_xpd, 0);
+	} else {
+		avc_quick_copy_xperms_decision(xperm, &local_xpd, xpd);
+	}
+	xpd = &local_xpd;
+
+	if (!avc_xperms_has_perm(xpd, xperm, XPERMS_ALLOWED))
+		avd.allowed &= ~requested;
+
 decision:
- 	denied = requested & ~(avd.allowed);
- 	if (unlikely(denied))
- 		rc = avc_denied(ssid, tsid, tclass, requested, driver, xperm,
- 				AVC_EXTENDED_PERMS, &avd);
- 
- 	rcu_read_unlock();
- 
- 	rc2 = avc_xperms_audit(ssid, tsid, tclass, requested,
- 			&avd, xpd, xperm, rc, ad);
- 	if (rc2)
- 		return rc2;
- 	return rc;
+	denied = requested & ~(avd.allowed);
+	if (unlikely(denied))
+		rc = avc_denied(ssid, tsid, tclass, requested, driver, xperm,
+				AVC_EXTENDED_PERMS, &avd);
+
+	rcu_read_unlock();
+
+	rc2 = avc_xperms_audit(ssid, tsid, tclass, requested,
+			&avd, xpd, xperm, rc, ad);
+	if (rc2)
+		return rc2;
+	return rc;
 }
 
 /**

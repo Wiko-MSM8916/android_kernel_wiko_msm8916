@@ -158,12 +158,12 @@ struct cond_node;
  * policy source. This is not used by the kernel policy but allows
  * utilities such as audit2allow to determine constraint denials.
  */
- struct type_set {
- 	struct ebitmap types;
- 	struct ebitmap negset;
- 	u32 flags;
- };
- 
+struct type_set {
+	struct ebitmap types;
+	struct ebitmap negset;
+	u32 flags;
+};
+
 /*
  * The configuration data includes security contexts for
  * initial SIDs, unlabeled file systems, TCP and UDP port numbers,
