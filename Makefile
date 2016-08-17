@@ -191,9 +191,15 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # "make" in the configured kernel build directory always uses that.
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
+<<<<<<< HEAD
 ARCH		?= $(SUBARCH)
 CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 
+=======
+export KBUILD_BUILDHOST := $(SUBARCH)
+ARCH		?=arm
+CROSS_COMPILE	?=/opt/toolchains/arm-eabi-4.7/bin/arm-eabi-
+>>>>>>> 548f8aa... mm: vmpressure: scale pressure based on reclaim context
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
 SRCARCH 	:= $(ARCH)
