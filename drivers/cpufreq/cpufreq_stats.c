@@ -83,7 +83,7 @@ static int cpufreq_stats_update(unsigned int cpu)
 		if (all_stat)
 			all_stat->time_in_state[stat->last_index] +=
 					cur_time - stat->last_time;
-	}	
+	}
 	stat->last_time = cur_time;
 	spin_unlock(&cpufreq_stats_lock);
 	return 0;
@@ -272,9 +272,9 @@ static struct attribute_group stats_attr_group = {
 
 static struct kobj_attribute _attr_all_time_in_state = __ATTR(all_time_in_state,
 		0444, show_all_time_in_state, NULL);
-		
+
 static struct kobj_attribute _attr_current_in_state = __ATTR(current_in_state,
-		0444, show_current_in_state, NULL);		
+		0444, show_current_in_state, NULL);
 
 static int freq_table_get_index(struct cpufreq_stats *stat, unsigned int freq)
 {
@@ -377,6 +377,7 @@ static int __cpufreq_stats_create_table(struct cpufreq_policy *policy,
 
 	stat->cpu = cpu;
 	per_cpu(cpufreq_stats_table, cpu) = stat;
+
 
 	alloc_size = count * sizeof(int) + count * sizeof(u64);
 
@@ -586,7 +587,7 @@ static int cpufreq_stat_notifier_policy(struct notifier_block *nb,
 	table = cpufreq_frequency_get_table(cpu);
 	if (!table)
 		return 0;
-	
+
 	for (i = 0; table[i].frequency != CPUFREQ_TABLE_END; i++) {
 		unsigned int freq = table[i].frequency;
 
@@ -594,7 +595,7 @@ static int cpufreq_stat_notifier_policy(struct notifier_block *nb,
 			continue;
 		count++;
 	}
-	
+
 	if (!per_cpu(all_cpufreq_stats, cpu))
 		cpufreq_allstats_create(cpu, table, count);
 
@@ -710,9 +711,9 @@ static int __init cpufreq_stats_init(void)
 			cpufreq_stats_free_table(cpu);
 		return ret;
 	}
-	
+
 	create_all_freq_table();
- 	ret = cpufreq_sysfs_create_file(&_attr_all_time_in_state.attr);
+	ret = cpufreq_sysfs_create_file(&_attr_all_time_in_state.attr);
 	if (ret)
 		pr_warn("Cannot create sysfs file for cpufreq stats\n");
 

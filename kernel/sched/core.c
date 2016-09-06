@@ -4407,8 +4407,15 @@ void scheduler_tick(void)
 	trigger_load_balance(rq, cpu);
 #endif
 	rq_last_tick_reset(rq);
+<<<<<<< HEAD
 	if (curr->sched_class == &fair_sched_class)
 		check_for_migration(rq, curr);
+=======
+
+	if (!sched_orig_load_balance_enable)
+		if (curr->sched_class == &fair_sched_class)
+			check_for_migration(rq, curr);
+>>>>>>> 9d03b18... Cleaning
 }
 
 #ifdef CONFIG_NO_HZ_FULL

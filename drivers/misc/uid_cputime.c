@@ -96,7 +96,7 @@ static int uid_stat_show(struct seq_file *m, void *v)
 			read_unlock(&tasklist_lock);
 			mutex_unlock(&uid_lock);
 			pr_err("%s: failed to find the uid_entry for uid %d\n",
-						__func__, from_kuid_munged(current_user_ns(),
+				__func__, from_kuid_munged(current_user_ns(),
 				task_uid(task)));
 			return -ENOMEM;
 		}
