@@ -66,6 +66,12 @@
 #include <linux/pid_namespace.h>
 
 #include "audit.h"
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PROC_AVC
+#include <linux/proc_avc.h>
+#endif
+>>>>>>> bd81e26... ALSA: compress: Add support to send codec specific data
 
 /* No auditing will take place until audit_initialized == AUDIT_INITIALIZED.
  * (Initialization happens after skb_init is called.) */

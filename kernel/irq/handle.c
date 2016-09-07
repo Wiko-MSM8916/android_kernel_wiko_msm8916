@@ -137,10 +137,25 @@ handle_irq_event_percpu(struct irq_desc *desc, struct irqaction *action)
 
 	do {
 		irqreturn_t res;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SEC_DEBUG
+		sec_debug_timer_log(4444, (int)irqs_disabled(),
+						(void *)action->handler);
+#endif
+>>>>>>> bd81e26... ALSA: compress: Add support to send codec specific data
 
 		trace_irq_handler_entry(irq, action);
 		res = action->handler(irq, action->dev_id);
 		trace_irq_handler_exit(irq, action, res);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SEC_DEBUG
+		sec_debug_timer_log(5555, (int)irqs_disabled(),
+						(void *)action->handler);
+		/* sec_debug_irq_sched_log(irq, (void *)action->handler, 2); */
+#endif
+>>>>>>> bd81e26... ALSA: compress: Add support to send codec specific data
 
 		if (WARN_ONCE(!irqs_disabled(),"irq %u handler %pF enabled interrupts\n",
 			      irq, action->handler))
