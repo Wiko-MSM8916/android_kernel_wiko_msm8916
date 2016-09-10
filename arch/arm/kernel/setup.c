@@ -694,6 +694,32 @@ static int __init early_mem(char *p)
 }
 early_param("mem", early_mem);
 
+<<<<<<< HEAD
+=======
+static int __init msm_serialnr_setup(char *p)
+{
+#ifdef CONFIG_EXTEND_SERIAL_NUM_16
+	unsigned long long serial = 0;
+	serial = simple_strtoull(p, NULL, 16);
+	system_serial_high = serial>>32;
+	system_serial_low = serial & 0xFFFFFFFF;
+#else
+	system_serial_low = simple_strtoul(p, NULL, 16);
+	system_serial_high = (system_serial_low&0xFFFF0000)>>16;
+	system_serial_low = system_serial_low&0x0000FFFF;
+#endif
+	return 0;
+}
+early_param("androidboot.serialno", msm_serialnr_setup);
+
+static int __init msm_hw_rev_setup(char *p)
+{
+	system_rev = memparse(p, NULL);
+	return 0;
+}
+early_param("samsung.board_rev", msm_hw_rev_setup);
+
+>>>>>>> cd0aafb... msm: vidc: Initialize the completion before sending the command
 static void __init request_standard_resources(const struct machine_desc *mdesc)
 {
 	struct memblock_region *region;
@@ -853,6 +879,12 @@ void __init setup_arch(char **cmdline_p)
 		mdesc = setup_machine_tags(__atags_pointer, __machine_arch_type);
 	machine_desc = mdesc;
 	machine_name = mdesc->name;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SEC_DEBUG_SUBSYS
+	unit_name = machine_name;
+#endif
+>>>>>>> cd0aafb... msm: vidc: Initialize the completion before sending the command
 
 	setup_dma_zone(mdesc);
 
