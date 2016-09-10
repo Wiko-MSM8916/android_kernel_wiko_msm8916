@@ -1135,6 +1135,10 @@ int mdss_hw_init(struct mdss_data_type *mdata)
 	struct mdss_mdp_pipe *vig;
 
 	mdss_hw_rev_init(mdata);
+	
+	/* Restoring Secure configuration during boot-up */
+	if (mdss_mdp_req_init_restore_cfg(mdata))
+		__mdss_restore_sec_cfg(mdata);
 
 	/* disable hw underrun recovery */
 	writel_relaxed(0x0, mdata->mdp_base +
