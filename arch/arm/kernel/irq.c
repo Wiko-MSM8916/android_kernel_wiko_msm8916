@@ -81,6 +81,13 @@ void handle_IRQ(unsigned int irq, struct pt_regs *regs)
 	}
 
 	irq_exit();
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SEC_DEBUG
+	sec_debug_irq_enterexit_log(irq, start_time);
+#endif
+
+>>>>>>> ac3fa14... Clean
 	set_irq_regs(old_regs);
 }
 

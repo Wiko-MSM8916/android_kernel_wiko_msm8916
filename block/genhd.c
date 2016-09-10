@@ -565,7 +565,11 @@ exit:
 
 	/* announce possible partitions */
 	disk_part_iter_init(&piter, disk, 0);
+<<<<<<< HEAD
 	while ((part = disk_part_iter_next(&piter)))
+=======
+	while ((part = disk_part_iter_next(&piter))){
+>>>>>>> ac3fa14... Clean
 		kobject_uevent(&part_to_dev(part)->kobj, KOBJ_ADD);
 	disk_part_iter_exit(&piter);
 }
@@ -666,6 +670,14 @@ void del_gendisk(struct gendisk *disk)
 	if (!sysfs_deprecated)
 		sysfs_remove_link(block_depr, dev_name(disk_to_dev(disk)));
 	pm_runtime_set_memalloc_noio(disk_to_dev(disk), false);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_BLOCK_SUPPORT_STLOG
+	dev=disk_to_dev(disk);
+	ST_LOG("<%s> KOBJ_REMOVE %d:%d %s",
+	__func__,MAJOR(dev->devt),MINOR(dev->devt),dev->kobj.name);
+#endif
+>>>>>>> ac3fa14... Clean
 	device_del(disk_to_dev(disk));
 }
 EXPORT_SYMBOL(del_gendisk);

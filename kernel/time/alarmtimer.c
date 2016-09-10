@@ -166,8 +166,6 @@ rtc_irq_reg_err:
 
 }
 
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_RTC_AUTO_PWRON
 extern int rtc_set_bootalarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm);
 /* 0|1234|56|78|90|12 */
@@ -271,7 +269,6 @@ int alarm_set_alarm(char* alarm_data)
 extern int alarm_set_alarm(char* alarm_data);
 #endif /*CONFIG_RTC_AUTO_PWRON*/
 
->>>>>>> bd81e26... ALSA: compress: Add support to send codec specific data
 static void alarmtimer_rtc_remove_device(struct device *dev,
 				struct class_interface *class_intf)
 {

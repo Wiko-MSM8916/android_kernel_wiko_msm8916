@@ -70,13 +70,10 @@ static unsigned long long notrace sched_clock_32(void)
 	u64 epoch_cyc;
 	u64 cyc;
 	unsigned long seq;
-<<<<<<< HEAD
 
-=======
 #ifdef CONFIG_SEC_DEBUG
 	u64 local;
 #endif
->>>>>>> bd81e26... ALSA: compress: Add support to send codec specific data
 	if (cd.suspended)
 		return cd.epoch_ns;
 
@@ -88,15 +85,12 @@ static unsigned long long notrace sched_clock_32(void)
 
 	cyc = read_sched_clock();
 	cyc = (cyc - epoch_cyc) & sched_clock_mask;
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_SEC_DEBUG
         local = epoch_ns + cyc_to_ns(cyc, cd.mult, cd.shift);
         sec_debug_save_last_ns(local);
         return local;
 #endif
 
->>>>>>> bd81e26... ALSA: compress: Add support to send codec specific data
 	return epoch_ns + cyc_to_ns(cyc, cd.mult, cd.shift);
 }
 
