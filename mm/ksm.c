@@ -1724,12 +1724,12 @@ static void ksm_do_scan(unsigned int scan_npages)
 	}
 }
 
+#ifdef CONFIG_ADAPTIVE_KSM
 static void process_timeout(unsigned long __data)
 {
 	wake_up_process((struct task_struct *)__data);
 }
 
-#ifdef CONFIG_ADAPTIVE_KSM
 static signed long __sched deferred_schedule_timeout(signed long timeout)
 {
 	struct timer_list timer;
