@@ -321,8 +321,9 @@ void adreno_ringbuffer_read_pfp_ucode(struct kgsl_device *device)
 	return;
 
 err:
-	KGSL_DRV_FATAL(device, "Failed to read pfp microcode %s\n",
+	KGSL_DRV_CRIT(device, "Failed to read pfp microcode %s\n",
 		adreno_dev->gpucore->pfpfw_name);
+	return ret;	
 }
 
 /**
