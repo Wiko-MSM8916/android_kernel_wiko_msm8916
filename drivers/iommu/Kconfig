@@ -137,6 +137,7 @@ config IOMMU_FORCE_4K_MAPPINGS
 
          If unsure, say N here.
 
+<<<<<<< HEAD
 config MSM_IOMMU_TLBINVAL_ON_MAP
 	bool "Invalidates the SMMU TLB on map"
 	depends on MSM_IOMMU
@@ -167,6 +168,8 @@ config MMU500_ACTIVE_PREFETCH_BUG_WITH_SECTION_MAPPING
 
 	 If unsure, say Y here if IOMMU mapping will not exhaust the VA space.
 
+=======
+>>>>>>> b9b18e6... iommu: msm: remove CONFIG_MSM_IOMMU_TLBINVAL_ON_MAP
 # AMD IOMMU support
 config AMD_IOMMU
 	bool "AMD IOMMU support"
