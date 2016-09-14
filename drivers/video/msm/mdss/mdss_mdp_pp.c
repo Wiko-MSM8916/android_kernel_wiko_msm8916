@@ -343,7 +343,6 @@ struct mdss_pp_res_type {
 	struct mdp_gamut_cfg_data gamut_disp_cfg[MDSS_BLOCK_DISP_NUM];
 	uint16_t gamut_tbl[MDSS_BLOCK_DISP_NUM][GAMUT_TOTAL_TABLE_SIZE];
 	u32 hist_data[MDSS_BLOCK_DISP_NUM][HIST_V_SIZE];
-	struct pp_sts_type pp_disp_sts[MDSS_BLOCK_DISP_NUM];
 	struct pp_sts_type pp_disp_sts[MDSS_MAX_MIXER_DISP_NUM];
 	/* physical info */
 	struct pp_hist_col_info *dspp_hist;
