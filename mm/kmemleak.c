@@ -1651,6 +1651,19 @@ static ssize_t kmemleak_write(struct file *file, const char __user *user_buf,
 	ret = mutex_lock_interruptible(&scan_mutex);
 	if (ret < 0)
 		return ret;
+	
+	if (strncmp(buf, "clear", 5) == 0) {
+		if (atomic_read(&kmemleak_enabled))
+			kmemleak_clear();
+ 	else
+			__kmemleak_do_cleanup();
+		goto out;
+	}
+
+	if (!atomic_read(&kmemleak_enabled)) {
+		ret = -EBUSY;
+		goto out;
+	}
 
 	if (strncmp(buf, "clear", 5) == 0) {
 		if (atomic_read(&kmemleak_enabled))
@@ -1730,6 +1743,7 @@ static void __kmemleak_do_cleanup(void)
 static void kmemleak_do_cleanup(struct work_struct *work)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&scan_mutex);
 	stop_scan_thread();
 
@@ -1751,6 +1765,16 @@ static void kmemleak_do_cleanup(struct work_struct *work)
 		rcu_read_unlock();
 	}
 >>>>>>> 78c35fd... kmemleak: free internal objects only if there're no leaks to be repor…
+=======
+	mutex_lock(&scan_mutex);
+	stop_scan_thread();
+
+	if (!kmemleak_found_leaks)
+		__kmemleak_do_cleanup();
+	else
+		pr_info("Kmemleak disabled without freeing internal data. "
+			"Reclaim the memory with \"echo clear > /sys/kernel/debug/kmemleak\"\n");
+>>>>>>> 9985eac... kmemleak: allow freeing internal objects after kmemleak was disabled.
 	mutex_unlock(&scan_mutex);
 }
 
