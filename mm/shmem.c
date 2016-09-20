@@ -1348,7 +1348,7 @@ static int shmem_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
 
 			ret = VM_FAULT_NOPAGE;
 			if ((vmf->flags & FAULT_FLAG_ALLOW_RETRY) &&
-					!(vmf->flags & FAULT_FLAG_RETRY_NOWAIT)) {
+			   !(vmf->flags & FAULT_FLAG_RETRY_NOWAIT)) {
 				/* It's polite to up mmap_sem if we can */
 				up_read(&vma->vm_mm->mmap_sem);
 				ret = VM_FAULT_RETRY;
