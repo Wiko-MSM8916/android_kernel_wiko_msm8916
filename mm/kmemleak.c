@@ -1395,7 +1395,11 @@ static void kmemleak_scan(void)
 
 	if (new_leaks) {
 		kmemleak_found_leaks = true;
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> 78c35fd... kmemleak: free internal objects only if there're no leaks to be repor…
 		pr_info("%d new suspected memory leaks (see "
 			"/sys/kernel/debug/kmemleak)\n", new_leaks);
 	}
@@ -1606,7 +1610,11 @@ static void kmemleak_clear(void)
 		spin_unlock_irqrestore(&object->lock, flags);
 	}
 	rcu_read_unlock();
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 78c35fd... kmemleak: free internal objects only if there're no leaks to be repor…
 	kmemleak_found_leaks = false;
 }
 
@@ -1721,6 +1729,7 @@ static void __kmemleak_do_cleanup(void)
  */
 static void kmemleak_do_cleanup(struct work_struct *work)
 {
+<<<<<<< HEAD
 	mutex_lock(&scan_mutex);
 	stop_scan_thread();
 
@@ -1729,6 +1738,19 @@ static void kmemleak_do_cleanup(struct work_struct *work)
 	else
 		pr_info("Kmemleak disabled without freeing internal data. "
 			"Reclaim the memory with \"echo clear > /sys/kernel/debug/kmemleak\"\n");
+=======
+	struct kmemleak_object *object;
+
+	mutex_lock(&scan_mutex);
+	stop_scan_thread();
+
+	if (!kmemleak_found_leaks) {
+		rcu_read_lock();
+		list_for_each_entry_rcu(object, &object_list, object_list)
+			delete_object_full(object->pointer);
+		rcu_read_unlock();
+	}
+>>>>>>> 78c35fd... kmemleak: free internal objects only if there're no leaks to be repor…
 	mutex_unlock(&scan_mutex);
 }
 
