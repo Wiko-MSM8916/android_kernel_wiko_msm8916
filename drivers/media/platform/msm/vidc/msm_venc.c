@@ -152,7 +152,6 @@ static const char *const vp8_profile_level[] = {
 	"2.0",
 	"3.0",
 };
-
 static const char *const perf_level[] = {
 	"Nominal",
 	"Performance",
@@ -1042,25 +1041,25 @@ static struct msm_vidc_ctrl msm_venc_ctrls[] = {
 		.qmenu = NULL,
 	},
 	{
- 		.id = V4L2_CID_MPEG_VIDC_VIDEO_PRIORITY,
- 		.name = "Session Priority",
- 		.type = V4L2_CTRL_TYPE_INTEGER,
- 		.minimum = V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_ENABLE,
- 		.maximum = V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_DISABLE,
- 		.default_value = V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_DISABLE,
- 		.step = 1,
- 		.qmenu = NULL,
- 	},
+		.id = V4L2_CID_MPEG_VIDC_VIDEO_PRIORITY,
+		.name = "Session Priority",
+		.type = V4L2_CTRL_TYPE_INTEGER,
+		.minimum = V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_ENABLE,
+		.maximum = V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_DISABLE,
+		.default_value = V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_DISABLE,
+		.step = 1,
+		.qmenu = NULL,
+	},
 	{
- 		.id = V4L2_CID_MPEG_VIDC_VIDEO_OPERATING_RATE,
- 		.name = "Set Encoder Operating rate",
- 		.type = V4L2_CTRL_TYPE_INTEGER,
- 		.minimum = 0,
- 		.maximum = 300 << 16,  /* 300 fps in Q16 format*/
- 		.default_value = 0,
- 		.step = 1,
- 		.qmenu = NULL,
- 	},
+		.id = V4L2_CID_MPEG_VIDC_VIDEO_OPERATING_RATE,
+		.name = "Set Encoder Operating rate",
+		.type = V4L2_CTRL_TYPE_INTEGER,
+		.minimum = 0,
+		.maximum = 300 << 16,  /* 300 fps in Q16 format*/
+		.default_value = 0,
+		.step = 1,
+		.qmenu = NULL,
+	},
 	{
 		.id = V4L2_CID_MPEG_VIDC_VIDEO_COLOR_SPACE,
 		.name = "Set Color space",
@@ -2377,12 +2376,34 @@ static int try_set_ctrl(struct msm_vidc_inst *inst, struct v4l2_ctrl *ctrl)
 	}
 	case V4L2_CID_MPEG_VIDC_VIDEO_INTRA_REFRESH_MODE: {
 		struct v4l2_ctrl *air_mbs, *air_ref, *cir_mbs;
+		bool is_cont_intra_supported = false;
+
 		air_mbs = TRY_GET_CTRL(V4L2_CID_MPEG_VIDC_VIDEO_AIR_MBS);
 		air_ref = TRY_GET_CTRL(V4L2_CID_MPEG_VIDC_VIDEO_AIR_REF);
 		cir_mbs = TRY_GET_CTRL(V4L2_CID_MPEG_VIDC_VIDEO_CIR_MBS);
 
-		property_id =
-			HAL_PARAM_VENC_INTRA_REFRESH;
+		is_cont_intra_supported =
+		(inst->fmts[CAPTURE_PORT]->fourcc == V4L2_PIX_FMT_H264) ||
+		(inst->fmts[CAPTURE_PORT]->fourcc == V4L2_PIX_FMT_HEVC);
+
+		if (is_cont_intra_supported) {
+			if (air_mbs || air_ref || cir_mbs)
+				enable.enable = true;
+			else
+				enable.enable = false;
+
+			rc = call_hfi_op(hdev, session_set_property,
+				(void *)inst->session,
+				HAL_PARAM_VENC_CONSTRAINED_INTRA_PRED, &enable);
+			if (rc) {
+				dprintk(VIDC_ERR,
+					"Failed to set constrained intra\n");
+				rc = -EINVAL;
+				break;
+			}
+		}
+
+		property_id = HAL_PARAM_VENC_INTRA_REFRESH;
 
 		intra_refresh.mode = ctrl->val;
 		intra_refresh.air_mbs = air_mbs->val;
@@ -2446,31 +2467,9 @@ static int try_set_ctrl(struct msm_vidc_inst *inst, struct v4l2_ctrl *ctrl)
 	}
 	case V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB: {
 		struct v4l2_ctrl *air_mbs, *air_ref;
-		bool is_cont_intra_supported = false;
 
 		air_mbs = TRY_GET_CTRL(V4L2_CID_MPEG_VIDC_VIDEO_AIR_MBS);
 		air_ref = TRY_GET_CTRL(V4L2_CID_MPEG_VIDC_VIDEO_AIR_REF);
-
-		is_cont_intra_supported =
-		(inst->fmts[CAPTURE_PORT]->fourcc == V4L2_PIX_FMT_H264) ||
-		(inst->fmts[CAPTURE_PORT]->fourcc == V4L2_PIX_FMT_HEVC);
-
-		if (is_cont_intra_supported) {
-			if (air_mbs || air_ref || cir_mbs)
-				enable.enable = true;
-			else
-				enable.enable = false;
-
-			rc = call_hfi_op(hdev, session_set_property,
-				(void *)inst->session,
-				HAL_PARAM_VENC_CONSTRAINED_INTRA_PRED, &enable);
-			if (rc) {
-				dprintk(VIDC_ERR,
-					"Failed to set constrained intra\n");
-				rc = -EINVAL;
-				break;
-			}
-		}
 
 		property_id = HAL_PARAM_VENC_INTRA_REFRESH;
 
@@ -2626,7 +2625,6 @@ static int try_set_ctrl(struct msm_vidc_inst *inst, struct v4l2_ctrl *ctrl)
 			rc = -ENOTSUPP;
 			break;
 		}
-
 		break;
 	case V4L2_CID_MPEG_VIDC_VIDEO_H264_VUI_BITSTREAM_RESTRICT:
 		property_id = HAL_PARAM_VENC_H264_VUI_BITSTREAM_RESTRC;
@@ -2743,13 +2741,13 @@ static int try_set_ctrl(struct msm_vidc_inst *inst, struct v4l2_ctrl *ctrl)
 		pdata = &hyb_hierp;
 		break;
 	case V4L2_CID_MPEG_VIDC_VIDEO_PRIORITY:
- 		property_id = HAL_CONFIG_REALTIME;
- 		enable.enable = ctrl->val;
- 		pdata = &enable;
- 		break;
+		property_id = HAL_CONFIG_REALTIME;
+		enable.enable = ctrl->val;
+		pdata = &enable;
+		break;
 	case V4L2_CID_MPEG_VIDC_VIDEO_OPERATING_RATE:
- 		property_id = 0;
- 		break;
+		property_id = 0;
+		break;
 	case V4L2_CID_MPEG_VIDC_VIDEO_COLOR_SPACE:
 	{
 		signal_info.color_space = ctrl->val;
