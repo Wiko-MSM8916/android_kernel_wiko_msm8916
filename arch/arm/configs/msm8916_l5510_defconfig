@@ -1,11 +1,11 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm 3.10.49 Kernel Configuration
+# Linux/arm 3.10.70 Kernel Configuration
 #
 
 CONFIG_SYSVIPC=y
 CONFIG_CROSS_COMPILE=""
-CONFIG_LOCALVERSION="-TeamPhonix"
+CONFIG_LOCALVERSION="-CyanogenMod"
 CONFIG_LOCALVERSION_AUTO=y
 CONFIG_AUDIT=y
 CONFIG_NO_HZ=y
