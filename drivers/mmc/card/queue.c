@@ -652,3 +652,4 @@ void mmc_queue_bounce_post(struct mmc_queue_req *mqrq)
 	sg_copy_from_buffer(mqrq->bounce_sg, mqrq->bounce_sg_len,
 		mqrq->bounce_buf, mqrq->sg[0].length);
 }
+
