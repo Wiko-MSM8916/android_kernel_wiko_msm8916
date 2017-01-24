@@ -256,7 +256,11 @@ CONFIG_PPPOLAC=y
 CONFIG_PPPOPNS=y
 CONFIG_PPP_MPPE=y
 CONFIG_USB_USBNET=y
+<<<<<<< HEAD
 # CONFIG_USB_OTG is not set
+=======
+CONFIG_USB_OTG=y
+>>>>>>> 9c41a6a... configs:L5510: Enable otg support and disable not need module
 CONFIG_WCNSS_CORE=y
 CONFIG_WCNSS_CORE_PRONTO=y
 CONFIG_WCNSS_MEM_PRE_ALLOC=y
