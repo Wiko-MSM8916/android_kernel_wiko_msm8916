@@ -27,7 +27,8 @@ dtb-$(CONFIG_ARCH_MSM8974) += msm8974-v1-cdp.dtb \
 	msm8974pro-ac-pm8941-cdp.dtb \
 	msm8974pro-ac-pm8941-liquid.dtb \
 	msm8974pro-ac-pm8941-mtp.dtb \
-	msm8974pro-ac-pma8084-pm8941-mtp.dtb
+	msm8974pro-ac-pma8084-pm8941-mtp.dtb \
+dtc -I dts -O dtb -o msm8916-sim.dtb msm8916-sim.dts \
 dtb-$(CONFIG_ARCH_MSM8909) += msm8909-sim.dtb \
 	msm8909-rumi.dtb \
 	msm8909-qrd-skua.dtb \
@@ -63,8 +64,7 @@ dtb-$(CONFIG_ARCH_MSM8909) += msm8909-sim.dtb \
 	msm8208-1gb-qrd-skue.dtb \
 	msm8208-1gb-rcm.dtb \
 	msm8208-qhd-cdp.dtb \
-	msm8208-qhd-rcm.dtb
-dtb-$(CONFIG_ARCH_MSM8916) += msm8916-sim.dtb \
+	msm8208-qhd-rcm.dtb \
 	msm8916-rumi.dtb \
 	msm8916-cdp.dtb \
 	msm8916-cdp-smb1360.dtb \
@@ -80,6 +80,8 @@ dtb-$(CONFIG_ARCH_MSM8916) += msm8916-sim.dtb \
 	msm8916-qrd-skuid.dtb \
 	msm8916-512mb-qrd-skuid.dtb \
 	msm8916-512mb-qrd-skuh.dtb \
+        msm8916-regulator.dtsi \
+        msm8916.dtsi \
 	msm8916-qrd-skut1.dtb \
 	apq8016-mtp.dtb \
 	apq8016-mtp-smb1360.dtb \
