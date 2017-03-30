@@ -2002,6 +2002,8 @@ static int msm_compr_get_codec_caps(struct snd_compr_stream *cstream,
 		break;
 	case SND_AUDIOCODEC_FLAC:
 		break;
+        case SND_AUDIOCODEC_VORBIS:
+ 		break;
 	case SND_AUDIOCODEC_ALAC:
 		break;
 	case SND_AUDIOCODEC_APE:
