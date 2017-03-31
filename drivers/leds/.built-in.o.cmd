@@ -1,0 +1,1 @@
+cmd_drivers/leds/built-in.o :=  /home/malcolmx/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-ld -EL    -r -o drivers/leds/built-in.o drivers/leds/led-core.o drivers/leds/led-class.o drivers/leds/led-triggers.o drivers/leds/leds-qpnp.o drivers/leds/leds-ktd2026.o drivers/leds/trigger/built-in.o 

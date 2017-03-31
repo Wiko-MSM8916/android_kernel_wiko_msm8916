@@ -1,0 +1,1 @@
+cmd_drivers/soc/qcom/memshare/built-in.o :=  /home/malcolmx/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-ld -EL    -r -o drivers/soc/qcom/memshare/built-in.o drivers/soc/qcom/memshare/heap_mem_ext_v01.o drivers/soc/qcom/memshare/msm_memshare.o 

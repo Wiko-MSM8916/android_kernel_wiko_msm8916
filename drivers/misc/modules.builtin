@@ -1,0 +1,5 @@
+kernel/drivers/misc/apds993x.ko
+kernel/drivers/misc/qseecom.ko
+kernel/drivers/misc/dev_info.ko
+kernel/drivers/misc/dmverity_query.ko
+kernel/drivers/misc/eeprom/eeprom_93cx6.ko

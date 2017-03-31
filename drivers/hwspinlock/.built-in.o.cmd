@@ -1,0 +1,1 @@
+cmd_drivers/hwspinlock/built-in.o :=  /home/malcolmx/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-ld -EL    -r -o drivers/hwspinlock/built-in.o drivers/hwspinlock/hwspinlock_core.o drivers/hwspinlock/msm_remote_spinlock.o 

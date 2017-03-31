@@ -1,0 +1,5 @@
+kernel/drivers/power/qpnp-vm-bms.ko
+kernel/drivers/power/batterydata-lib.ko
+kernel/drivers/power/batterydata-interface.ko
+kernel/drivers/power/qpnp-linear-charger.ko
+kernel/drivers/power/battery_current_limit.ko

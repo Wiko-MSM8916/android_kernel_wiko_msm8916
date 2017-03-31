@@ -1,0 +1,6 @@
+kernel/drivers/input/touchscreen/gen_vkeys.ko
+kernel/drivers/input/touchscreen/synaptics_rmi_dev.ko
+kernel/drivers/input/touchscreen/synaptics_fw_update.ko
+kernel/drivers/input/touchscreen/synaptics_i2c_rmi4.ko
+kernel/drivers/input/touchscreen/bu21150.ko
+kernel/drivers/input/touchscreen/input_mt_wrapper.ko

@@ -1,0 +1,1 @@
+cmd_drivers/input/touchscreen/synaptics_dsx/built-in.o :=  /home/malcolmx/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-ld -EL    -r -o drivers/input/touchscreen/synaptics_dsx/built-in.o drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_i2c.o 
