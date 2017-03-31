@@ -2280,7 +2280,6 @@ static int venus_hfi_sys_set_debug(struct venus_hfi_device *device, u32 debug)
 	return 0;
 }
 
-<<<<<<< HEAD
 static int venus_hfi_sys_set_coverage(struct venus_hfi_device *device, u32 mode)
 {
 	u8 packet[VIDC_IFACEQ_VAR_SMALL_PKT_SIZE];
@@ -2302,8 +2301,6 @@ static int venus_hfi_sys_set_coverage(struct venus_hfi_device *device, u32 mode)
 	return 0;
 }
 
-=======
->>>>>>> f740bd7... msm: vidc: Change packet memory to static allocation mode
 static int venus_hfi_sys_set_idle_message(struct venus_hfi_device *device,
 	bool enable)
 {

@@ -1452,15 +1452,12 @@ static int pp_mixer_setup(u32 disp_num,
 			pp_update_argc_lut(addr, pgc_config);
 		}
 		ctl->flush_bits |= lm_bitmask;
+
 	}
 
 	/* update LM opmode if LM needs flush */
-<<<<<<< HEAD
-	if (flags & PP_FLAGS_DIRTY_ARGC) {
-=======
 	if ((pp_sts->argc_sts & PP_STS_ENABLE) &&
 		(flags & PP_FLAGS_DIRTY_ARGC)) {
->>>>>>> 7560ffd... msm: mdss: Extend GC programming to writeback mixers in pp
 		addr = mixer->base + MDSS_MDP_REG_LM_OP_MODE;
 		opmode = readl_relaxed(addr);
 		opmode |= (1 << 0); /* GC_LUT_EN */
@@ -1879,10 +1876,7 @@ int mdss_mdp_pp_setup_locked(struct mdss_mdp_ctl *ctl)
 	mutex_lock(&mdss_pp_mutex);
 
 	flags = mdss_pp_res->pp_disp_flags[disp_num];
-<<<<<<< HEAD
-=======
 	pa_v2_flags = mdss_pp_res->pa_v2_disp_cfg[disp_num].flags;
->>>>>>> 7560ffd... msm: mdss: Extend GC programming to writeback mixers in pp
 	if (!wb_mixer)
 		pa_v2_flags = mdss_pp_res->pa_v2_disp_cfg[disp_num].flags;
 	else
