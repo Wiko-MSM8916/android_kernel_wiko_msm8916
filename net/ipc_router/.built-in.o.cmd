@@ -1,1 +1,0 @@
-cmd_net/ipc_router/built-in.o :=  /home/malcolmx/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-ld -EL    -r -o net/ipc_router/built-in.o net/ipc_router/ipc_router_core.o net/ipc_router/ipc_router_socket.o net/ipc_router/ipc_router_security.o 

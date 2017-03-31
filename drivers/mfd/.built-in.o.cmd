@@ -1,1 +1,0 @@
-cmd_drivers/mfd/built-in.o :=  /home/malcolmx/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-ld -EL    -r -o drivers/mfd/built-in.o drivers/mfd/mfd-core.o drivers/mfd/wcd9xxx-core.o drivers/mfd/wcd9xxx-irq.o drivers/mfd/wcd9xxx-slimslave.o drivers/mfd/wcd9xxx-core-resource.o 

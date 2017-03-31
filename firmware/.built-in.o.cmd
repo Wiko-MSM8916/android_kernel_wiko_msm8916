@@ -1,1 +1,0 @@
-cmd_firmware/built-in.o :=  /home/malcolmx/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-ld -EL    -r -o firmware/built-in.o firmware/PR1593801-s3203_n_dsx8232_JTOUCH.img.gen.o firmware/PR1593801-s3203_n_dsx8232_TTOUCH.img.gen.o 

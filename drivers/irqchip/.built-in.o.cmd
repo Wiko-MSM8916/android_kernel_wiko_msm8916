@@ -1,1 +1,0 @@
-cmd_drivers/irqchip/built-in.o :=  /home/malcolmx/Android/toolchain/arm-eabi-4.8/bin/arm-eabi-ld -EL    -r -o drivers/irqchip/built-in.o drivers/irqchip/irqchip.o drivers/irqchip/irq-gic.o drivers/irqchip/irq-msm.o drivers/irqchip/msm_show_resume_irq.o 

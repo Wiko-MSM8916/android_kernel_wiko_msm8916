@@ -680,9 +680,6 @@ obj-$(CONFIG_PRIMA_WLAN) += $(MODNAME).o
 obj-$(CONFIG_PRONTO_WLAN) += $(MODNAME).o
 $(MODNAME)-y := $(OBJS)
 
-<<<<<<< HEAD:drivers/staging/prima/Makefile
-=======
 clean::
 	rm -f *.o *.ko *.mod.c *.mod.o *~ .*.cmd Module.symvers
 	rm -rf .tmp_versions
->>>>>>> afe856b... wlan: Update driver:drivers/staging/prima/Kbuild
