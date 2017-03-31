@@ -565,11 +565,8 @@ exit:
 
 	/* announce possible partitions */
 	disk_part_iter_init(&piter, disk, 0);
-<<<<<<< HEAD
 	while ((part = disk_part_iter_next(&piter)))
-=======
 	while ((part = disk_part_iter_next(&piter))){
->>>>>>> ac3fa14... Clean
 		kobject_uevent(&part_to_dev(part)->kobj, KOBJ_ADD);
 	disk_part_iter_exit(&piter);
 }

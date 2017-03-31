@@ -392,14 +392,7 @@ union snd_codec_options {
 	struct snd_enc_generic generic;
 	struct snd_dec_ddp ddp;
 	struct snd_dec_flac flac_dec;
-<<<<<<< HEAD
         struct snd_dec_vorbis vorbis_dec;
-=======
-	struct snd_dec_vorbis vorbis_dec;
-<<<<<<< HEAD
->>>>>>> 8a0f90f... ALSA: compress: Add support to send codec specific data
-=======
->>>>>>> 8a0f90f... ALSA: compress: Add support to send codec specific data
 	struct snd_dec_alac alac;
 	struct snd_dec_ape ape;
 };
